@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Medico extends Pessoa{	
@@ -13,7 +15,12 @@ public class Medico extends Pessoa{
 	
 	//Atributos
 	
-	private Especialidade especialidade;
+	@OneToMany
+	@JoinColumn(name="especialidade_id")
+	private List<Especialidade> especialidades = new ArrayList<>();
+	
+	@OneToMany
+	@JoinColumn(name="paciente_id")
 	private List<Paciente> pacientes = new ArrayList<>();
 	
 	
@@ -22,20 +29,18 @@ public class Medico extends Pessoa{
 	public Medico() {
 	}
 	
-	public Medico(Integer id, String nome, Integer idade, String email, String senha, Especialidade especialidade) {
+	public Medico(Integer id, String nome, Integer idade, String email, String senha) {
 		super(id, nome, idade, email, senha);
-		this.especialidade = especialidade;
 	}
-	
-	
+
 	//Getters e setters
-
-	public Especialidade getEspecialidade() {
-		return especialidade;
+	
+	public List<Especialidade> getEspecialidades() {
+		return especialidades;
 	}
 
-	public void setEspecialidade(Especialidade especialidade) {
-		this.especialidade = especialidade;
+	public void setEspecialidades(List<Especialidade> especialidades) {
+		this.especialidades = especialidades;
 	}
 
 	public List<Paciente> getPacientes() {
@@ -45,5 +50,5 @@ public class Medico extends Pessoa{
 	public void setPacientes(List<Paciente> pacientes) {
 		this.pacientes = pacientes;
 	}
-	
+
 }
