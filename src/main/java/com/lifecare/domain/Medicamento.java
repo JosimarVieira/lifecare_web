@@ -1,11 +1,16 @@
 package com.lifecare.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Medicamento implements Serializable {
@@ -23,13 +28,18 @@ public class Medicamento implements Serializable {
 	private Boolean continuo;
 	private String admDeUso;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="id.medicamento")
+	private Set<ItemMedicamento> itens = new HashSet<>();
+	
 	
 	//Construtores
 	
 	public Medicamento() {
-	}
+	}	
 	
-	public Medicamento(Integer id, Integer qtDias, String nome, String tipo, Boolean continuo, String admDeUso) {
+	public Medicamento(Integer id, Integer qtDias, String nome, String tipo, Boolean continuo, String admDeUso,
+			Set<ItemMedicamento> itens) {
 		super();
 		this.id = id;
 		this.qtDias = qtDias;
@@ -37,51 +47,70 @@ public class Medicamento implements Serializable {
 		this.tipo = tipo;
 		this.continuo = continuo;
 		this.admDeUso = admDeUso;
+		this.itens = itens;
 	}
-
-
+	
 	//Getters e setters
 	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Integer getQtDias() {
 		return qtDias;
 	}
+
 	public void setQtDias(Integer qtDias) {
 		this.qtDias = qtDias;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
 	public Boolean getContinuo() {
 		return continuo;
 	}
+
 	public void setContinuo(Boolean continuo) {
 		this.continuo = continuo;
 	}
+
 	public String getAdmDeUso() {
 		return admDeUso;
 	}
+
 	public void setAdmDeUso(String admDeUso) {
 		this.admDeUso = admDeUso;
 	}
-	
-	
+
+	public Set<ItemMedicamento> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemMedicamento> itens) {
+		this.itens = itens;
+	}
+
+
 	//hashCode e equals
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

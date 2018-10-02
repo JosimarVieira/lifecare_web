@@ -2,12 +2,18 @@ package com.lifecare.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Prontuario implements Serializable {
@@ -19,53 +25,92 @@ public class Prontuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	private Integer score;
-	private List<Medicamento> medicamentos = new ArrayList<>();
+	
+	@OneToMany(mappedBy="id.prontuario")
+	private Set<ItemMedicamento> itens = new HashSet<>();
+	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="prontuario")
 	private Paciente paciente;
+	
+	@OneToOne
+	@JoinColumn(name="risco_id")
+	private Risco risco;
+	
+	@OneToMany(mappedBy="prontuario")
+	private List<LinhaDeCuidado> linhasDeCuidado = new ArrayList<>();
 	
 	//Construtores
 	
 	public Prontuario() {
 	}
 	
-	public Prontuario(Integer id, Integer score, Paciente paciente) {
+	public Prontuario(Integer id, Integer score, Set<ItemMedicamento> itens, Paciente paciente, Risco risco,
+			List<LinhaDeCuidado> linhasDeCuidado) {
 		super();
 		this.id = id;
 		this.score = score;
+		this.itens = itens;
 		this.paciente = paciente;
+		this.risco = risco;
+		this.linhasDeCuidado = linhasDeCuidado;
 	}
-	
-	
+
+
 	//Getters e setters
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Integer getScore() {
 		return score;
 	}
+
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-	public List<Medicamento> getMedicamentos() {
-		return medicamentos;
+
+	public Set<ItemMedicamento> getItens() {
+		return itens;
 	}
-	public void setMedicamentos(List<Medicamento> medicamentos) {
-		this.medicamentos = medicamentos;
+
+	public void setItens(Set<ItemMedicamento> itens) {
+		this.itens = itens;
 	}
+
 	public Paciente getPaciente() {
 		return paciente;
 	}
+
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public Risco getRisco() {
+		return risco;
+	}
+
+	public void setRisco(Risco risco) {
+		this.risco = risco;
+	}
+
+	public List<LinhaDeCuidado> getLinhasDeCuidado() {
+		return linhasDeCuidado;
+	}
+
+	public void setLinhasDeCuidado(List<LinhaDeCuidado> linhasDeCuidado) {
+		this.linhasDeCuidado = linhasDeCuidado;
 	}
 	
 	
 	//hashCode e equals
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,6 +118,7 @@ public class Prontuario implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -89,5 +135,6 @@ public class Prontuario implements Serializable {
 			return false;
 		return true;
 	}
+
 
 }

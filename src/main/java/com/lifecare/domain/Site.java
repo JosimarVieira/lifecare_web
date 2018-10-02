@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Site implements Serializable {
@@ -19,37 +21,53 @@ public class Site implements Serializable {
 	private Integer id;
 	private String url;
 	
+	@ManyToOne
+	@JoinColumn(name="linha_de_cuidado_id")
+	private LinhaDeCuidado linhaDeCuidado;
+	
 	
 	//Construtores
 	
 	public Site() {
 	}
-
-	public Site(Integer id, String url) {
+		
+	public Site(Integer id, String url, LinhaDeCuidado linhaDeCuidado) {
 		super();
 		this.id = id;
 		this.url = url;
+		this.linhaDeCuidado = linhaDeCuidado;
 	}
-	
-	
+
+
 	//Getters e setters
 	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public LinhaDeCuidado getLinhaDeCuidado() {
+		return linhaDeCuidado;
+	}
+
+	public void setLinhaDeCuidado(LinhaDeCuidado linhaDeCuidado) {
+		this.linhaDeCuidado = linhaDeCuidado;
 	}
 	
 	
 	//hashCode e equals
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED) //Gera uma tabela para cada subclasse
@@ -26,6 +28,9 @@ public abstract class Pessoa implements Serializable {
 	private String email;
 	private String senha;
 	
+	@OneToOne
+	@JoinColumn(name="cidade_id")
+	private Cidade cidade;
 	
 	//Construtores
 	
