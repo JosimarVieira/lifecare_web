@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.lifecare.domain.Cidade;
 import com.lifecare.repositories.CidadeRepository;
+import com.lifecare.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CidadeService {
@@ -14,6 +15,9 @@ public class CidadeService {
 	
 	public Cidade buscar(Integer id) {
 		Cidade obj = repo.findOne(id);
+		if(obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Cidade.class.getName());
+		}
 		return obj;
 	}
 	

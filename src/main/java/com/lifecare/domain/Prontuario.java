@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Prontuario implements Serializable {
 
@@ -39,6 +41,7 @@ public class Prontuario implements Serializable {
 	@OneToMany(mappedBy="prontuario")
 	private List<LinhaDeCuidado> linhasDeCuidado = new ArrayList<>();
 	
+	@JsonManagedReference //faz com que retorne os medicamentos no Json
 	@ManyToMany
 	@JoinTable(name="PRONTUARIO_MEDICAMENTO",
 			joinColumns = @JoinColumn(name="medicamento_id"),
