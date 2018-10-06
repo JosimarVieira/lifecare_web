@@ -2,9 +2,7 @@ package com.lifecare.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -28,8 +28,6 @@ public class Prontuario implements Serializable {
 	
 	private Integer score;
 	
-	@OneToMany(mappedBy="id.prontuario")
-	private Set<ItemMedicamento> itens = new HashSet<>();
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="prontuario")
 	private Paciente paciente;
@@ -41,23 +39,28 @@ public class Prontuario implements Serializable {
 	@OneToMany(mappedBy="prontuario")
 	private List<LinhaDeCuidado> linhasDeCuidado = new ArrayList<>();
 	
+	@ManyToMany
+	@JoinTable(name="PRONTUARIO_MEDICAMENTO",
+			joinColumns = @JoinColumn(name="medicamento_id"),
+			inverseJoinColumns = @JoinColumn(name="prontuario_id")
+	)
+	private List<Medicamento> medicamentos = new ArrayList<>();
+	
 	//Construtores
 	
 	public Prontuario() {
 	}
 	
-	public Prontuario(Integer id, Integer score, Set<ItemMedicamento> itens, Paciente paciente, Risco risco,
-			List<LinhaDeCuidado> linhasDeCuidado) {
+	public Prontuario(Integer id, Integer score, Paciente paciente, Risco risco, List<LinhaDeCuidado> linhasDeCuidado) {
 		super();
 		this.id = id;
 		this.score = score;
-		this.itens = itens;
 		this.paciente = paciente;
 		this.risco = risco;
 		this.linhasDeCuidado = linhasDeCuidado;
 	}
 
-
+	
 	//Getters e setters
 
 	public Integer getId() {
@@ -74,14 +77,6 @@ public class Prontuario implements Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
-	}
-
-	public Set<ItemMedicamento> getItens() {
-		return itens;
-	}
-
-	public void setItens(Set<ItemMedicamento> itens) {
-		this.itens = itens;
 	}
 
 	public Paciente getPaciente() {
@@ -106,6 +101,14 @@ public class Prontuario implements Serializable {
 
 	public void setLinhasDeCuidado(List<LinhaDeCuidado> linhasDeCuidado) {
 		this.linhasDeCuidado = linhasDeCuidado;
+	}
+	
+	public List<Medicamento> getMedicamentos() {
+		return medicamentos;
+	}
+
+	public void setMedicamentos(List<Medicamento> medicamentos) {
+		this.medicamentos = medicamentos;
 	}
 	
 	

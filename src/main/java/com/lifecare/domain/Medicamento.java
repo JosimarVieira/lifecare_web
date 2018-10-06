@@ -1,16 +1,14 @@
 package com.lifecare.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Medicamento implements Serializable {
@@ -28,18 +26,15 @@ public class Medicamento implements Serializable {
 	private Boolean continuo;
 	private String admDeUso;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="id.medicamento")
-	private Set<ItemMedicamento> itens = new HashSet<>();
-	
+	@ManyToMany(mappedBy="medicamentos")
+	private List<Prontuario> prontuarios = new ArrayList<>();
 	
 	//Construtores
 	
 	public Medicamento() {
 	}	
 	
-	public Medicamento(Integer id, Integer qtDias, String nome, String tipo, Boolean continuo, String admDeUso,
-			Set<ItemMedicamento> itens) {
+	public Medicamento(Integer id, Integer qtDias, String nome, String tipo, Boolean continuo, String admDeUso) {
 		super();
 		this.id = id;
 		this.qtDias = qtDias;
@@ -47,8 +42,8 @@ public class Medicamento implements Serializable {
 		this.tipo = tipo;
 		this.continuo = continuo;
 		this.admDeUso = admDeUso;
-		this.itens = itens;
 	}
+
 	
 	//Getters e setters
 	
@@ -100,12 +95,12 @@ public class Medicamento implements Serializable {
 		this.admDeUso = admDeUso;
 	}
 
-	public Set<ItemMedicamento> getItens() {
-		return itens;
+	public List<Prontuario> getProntuarios() {
+		return prontuarios;
 	}
 
-	public void setItens(Set<ItemMedicamento> itens) {
-		this.itens = itens;
+	public void setProntuarios(List<Prontuario> prontuarios) {
+		this.prontuarios = prontuarios;
 	}
 
 
@@ -118,6 +113,7 @@ public class Medicamento implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
