@@ -28,8 +28,9 @@ public class Cidade implements Serializable {
 	public Cidade() {
 	}
 	
-	public Cidade(String nome, String uf) {
+	public Cidade(Integer id, String nome, String uf) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.uf = uf;
 	}
