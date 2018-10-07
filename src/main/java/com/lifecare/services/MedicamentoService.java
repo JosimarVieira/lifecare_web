@@ -13,7 +13,7 @@ public class MedicamentoService {
 	@Autowired
 	private MedicamentoRepository repo;
 	
-	public Medicamento buscar(Integer id) {
+	public Medicamento find(Integer id) {
 		Medicamento obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Medicamento.class.getName());

@@ -18,8 +18,8 @@ public class MedicamentoResource {
 	private MedicamentoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id){
-		Medicamento obj = service.buscar(id);
+	public ResponseEntity<Medicamento> find(@PathVariable Integer id){
+		Medicamento obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 

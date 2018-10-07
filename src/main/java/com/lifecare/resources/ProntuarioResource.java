@@ -18,8 +18,8 @@ public class ProntuarioResource {
 	private ProntuarioService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id){
-		Prontuario obj = service.buscar(id);
+	public ResponseEntity<Prontuario> find(@PathVariable Integer id){
+		Prontuario obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 

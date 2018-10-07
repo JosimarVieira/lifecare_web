@@ -13,7 +13,7 @@ public class ProntuarioService {
 	@Autowired
 	private ProntuarioRepository repo;
 	
-	public Prontuario buscar(Integer id) {
+	public Prontuario find(Integer id) {
 		Prontuario obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Prontuario.class.getName());

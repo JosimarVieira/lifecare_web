@@ -1,10 +1,12 @@
 package com.lifecare.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.lifecare.domain.Medico;
 import com.lifecare.repositories.MedicoRepository;
+import com.lifecare.services.exceptions.DataIntegrityException;
 import com.lifecare.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -13,12 +15,34 @@ public class MedicoService {
 	@Autowired
 	private MedicoRepository repo;
 	
-	public Medico buscar(Integer id) {
+	public Medico find(Integer id) {
 		Medico obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Medico.class.getName());
 		}
 		return obj;
+	}
+
+	public Medico insert(Medico obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	public Medico update(Medico obj) {
+		find(obj.getId());
+		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir um médico que possui pacientes");
+		}
+		
+		
 	}
 	
 }
