@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Medicamento implements Serializable {
@@ -28,7 +28,7 @@ public class Medicamento implements Serializable {
 	private Boolean continuo;
 	private String admDeUso;
 	
-	@JsonBackReference //faz com que não sejam retornados os prontuários no Json
+	@JsonIgnore
 	@ManyToMany(mappedBy="medicamentos")
 	private List<Prontuario> prontuarios = new ArrayList<>();
 	

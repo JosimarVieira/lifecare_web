@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Prontuario implements Serializable {
@@ -30,18 +27,20 @@ public class Prontuario implements Serializable {
 	
 	private Integer score;
 	
-	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="prontuario")
+	@OneToOne
+	@JoinColumn(name="paciente_id")
 	private Paciente paciente;
 	
-	@OneToOne
-	@JoinColumn(name="risco_id")
-	private Risco risco;
+	@ManyToMany
+	@JoinTable(name="PRONTUARIO_RISCO",
+			joinColumns = @JoinColumn(name="risco_id"),
+			inverseJoinColumns = @JoinColumn(name="prontuario_id")
+	)
+	private List<Risco> riscos = new ArrayList<>();
 	
 	@OneToMany(mappedBy="prontuario")
 	private List<LinhaDeCuidado> linhasDeCuidado = new ArrayList<>();
 	
-	@JsonManagedReference //faz com que retorne os medicamentos no Json
 	@ManyToMany
 	@JoinTable(name="PRONTUARIO_MEDICAMENTO",
 			joinColumns = @JoinColumn(name="medicamento_id"),
@@ -54,13 +53,11 @@ public class Prontuario implements Serializable {
 	public Prontuario() {
 	}
 	
-	public Prontuario(Integer id, Integer score, Paciente paciente, Risco risco, List<LinhaDeCuidado> linhasDeCuidado) {
+	public Prontuario(Integer id, Integer score, Paciente paciente) {
 		super();
 		this.id = id;
 		this.score = score;
 		this.paciente = paciente;
-		this.risco = risco;
-		this.linhasDeCuidado = linhasDeCuidado;
 	}
 
 	
@@ -90,12 +87,12 @@ public class Prontuario implements Serializable {
 		this.paciente = paciente;
 	}
 
-	public Risco getRisco() {
-		return risco;
+	public List<Risco> getRiscos() {
+		return riscos;
 	}
 
-	public void setRisco(Risco risco) {
-		this.risco = risco;
+	public void setRiscos(List<Risco> riscos) {
+		this.riscos = riscos;
 	}
 
 	public List<LinhaDeCuidado> getLinhasDeCuidado() {

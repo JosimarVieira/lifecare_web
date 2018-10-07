@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class LinhaDeCuidado implements Serializable {
 
@@ -29,6 +31,7 @@ public class LinhaDeCuidado implements Serializable {
 	@OneToMany(mappedBy="linhaDeCuidado")
 	private List<Site> sites = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="prontuario_id")
 	private Prontuario prontuario;
@@ -38,12 +41,11 @@ public class LinhaDeCuidado implements Serializable {
 	public LinhaDeCuidado() {
 	}
 	
-	public LinhaDeCuidado(Integer id, String acoes, String titulo, List<Site> sites, Prontuario prontuario) {
+	public LinhaDeCuidado(Integer id, String acoes, String titulo, Prontuario prontuario) {
 		super();
 		this.id = id;
 		this.acoes = acoes;
 		this.titulo = titulo;
-		this.sites = sites;
 		this.prontuario = prontuario;
 	}
 

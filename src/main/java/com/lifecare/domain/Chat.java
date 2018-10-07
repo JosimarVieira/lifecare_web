@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Chat implements Serializable {
 
@@ -26,7 +24,6 @@ public class Chat implements Serializable {
 	@OneToMany(mappedBy="chat")
 	private List<ItemChat> itensChat = new ArrayList<>();
 	
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="paciente_id")
 	private Paciente paciente;

@@ -2,17 +2,14 @@ package com.lifecare.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-@Entity
-@Inheritance(strategy=InheritanceType.JOINED) //Gera uma tabela para cada subclasse
+@MappedSuperclass //cada subclasse terá seus próprios IDs
 public abstract class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -89,6 +86,16 @@ public abstract class Pessoa implements Serializable {
 		this.senha = senha;
 	}
 
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+	
+	//hashCode e equals
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,9 +103,6 @@ public abstract class Pessoa implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-	
-	//hashCode e equals
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -116,6 +120,6 @@ public abstract class Pessoa implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	
 }

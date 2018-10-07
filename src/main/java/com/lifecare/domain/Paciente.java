@@ -14,15 +14,16 @@ public class Paciente extends Pessoa{
 	
 	//Atributos
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="medico_id")
 	private Medico medico;
 	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name="prontuario_id")
+	@OneToOne(mappedBy="paciente")
 	private Prontuario prontuario;
-
+	
+	@JsonIgnore
 	@OneToOne(mappedBy="paciente")
 	private Chat chat;
 	
@@ -31,8 +32,8 @@ public class Paciente extends Pessoa{
 	public Paciente() {
 	}
 
-	public Paciente(Medico medico, Prontuario prontuario, Chat chat) {
-		super();
+	public Paciente(Integer id, String nome, Integer idade, String email, String senha, Medico medico, Prontuario prontuario, Chat chat) {
+		super(id, nome, idade, email, senha);
 		this.medico = medico;
 		this.prontuario = prontuario;
 		this.chat = chat;
@@ -64,7 +65,5 @@ public class Paciente extends Pessoa{
 	public void setChat(Chat chat) {
 		this.chat = chat;
 	}
-	
-	
 
 }

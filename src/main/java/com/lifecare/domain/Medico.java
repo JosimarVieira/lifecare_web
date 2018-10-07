@@ -10,14 +10,15 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Medico extends Pessoa{	
 
 	private static final long serialVersionUID = 1L;
 	
-	
 	//Atributos
-	
+
 	@ElementCollection
 	@CollectionTable(name="ESPECIALIDADE")
 	private Set<String> especialidades = new HashSet<>(); //não deixa repetir
@@ -25,6 +26,7 @@ public class Medico extends Pessoa{
 	@OneToMany(mappedBy="medico")
 	private List<Paciente> pacientes = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="medico")
 	private List<ItemChat> itensChat = new ArrayList<>();
 	

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemChat implements Serializable {
 
@@ -20,6 +22,7 @@ public class ItemChat implements Serializable {
 	private String conversa;
 	private int estado; //mensagem enviada, lido
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="medico_id")
 	private Medico medico;
