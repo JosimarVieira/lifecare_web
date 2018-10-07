@@ -1,6 +1,8 @@
 package com.lifecare.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lifecare.domain.Medico;
+import com.lifecare.domain.dto.MedicoDTO;
 import com.lifecare.services.MedicoService;
 
 @RestController
@@ -48,4 +51,11 @@ public class MedicoResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<MedicoDTO>> findAll(){
+		List<Medico> list = service.findAll();
+		List<MedicoDTO> listDto = list.stream().map(obj -> new MedicoDTO(obj)).collect(Collectors.toList()); //percorre o list e cria um objeto MedicoDTO
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 }

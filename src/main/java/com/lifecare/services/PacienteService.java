@@ -1,5 +1,7 @@
 package com.lifecare.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -40,8 +42,11 @@ public class PacienteService {
 		}
 		catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um objeto com entidades associadas");
-		}
-			
+		}	
+	}
+		
+	public List<Paciente> findAll() {
+		return repo.findAll();
 	}
 	
 }

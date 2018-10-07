@@ -1,5 +1,7 @@
 package com.lifecare.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -40,9 +42,11 @@ public class MedicoService {
 		}
 		catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um médico que possui pacientes");
-		}
-		
-		
+		}		
+	}
+	
+	public List<Medico> findAll() {
+		return repo.findAll();
 	}
 	
 }

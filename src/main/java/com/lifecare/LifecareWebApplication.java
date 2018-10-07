@@ -66,6 +66,7 @@ public class LifecareWebApplication implements CommandLineRunner{
 		medicamentoRepository.save(Arrays.asList(m1, m2));
 		
 		Paciente paciente1 = new Paciente(null, "Carlos", 29, "carlos@gmail.com", "123", null, null, null);	
+		Paciente paciente2 = new Paciente(null, "Roberto", 40, "roberto@gmail.com", "123", null, null, null);	
 		Medico med = new Medico(null, "Rodolfo", 18, "email", "123");
 		Medico med1 = new Medico(null, "Rodrigo", 18, "email", "123");
 		Prontuario p1 = new Prontuario(null, 500, paciente1);
@@ -89,7 +90,7 @@ public class LifecareWebApplication implements CommandLineRunner{
 		
 		riscoRepository.save(risco);
 		medicoRepository.save(med);
-		pacienteRepository.save(paciente1);
+		pacienteRepository.save(Arrays.asList(paciente1, paciente2));
 		prontuarioRepository.save(p1);
 		medicoRepository.save(med1);
 		linhaDeCuidadoRepository.save(linhaDeCuidado);
